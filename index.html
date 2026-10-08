@@ -123,6 +123,12 @@
             box-shadow: 0 8px 20px rgba(233, 30, 99, 0.2);
         }
 
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
+            70% { transform: scale(1.02); box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+        }
+
         .download-btn {
             background: white;
             color: var(--primary);
@@ -134,11 +140,26 @@
             font-size: 16px;
             margin-top: 16px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transition: transform 0.1s ease;
+            animation: pulse 2s infinite;
+            cursor: pointer;
         }
 
         .download-btn:active {
             transform: scale(0.98);
+        }
+
+        /* Active status banner */
+        #status-banner {
+            display: none;
+            background: #E8F5E9;
+            color: #2E7D32;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            margin-top: 12px;
+            text-align: center;
+            font-weight: 500;
+            border: 1px solid #C8E6C9;
         }
 
         .steps-container {
@@ -224,8 +245,11 @@
         <div class="download-box">
             <h3 id="ui-box-title" style="margin:0 0 6px 0; font-size:18px;">Ready to build your CV?</h3>
             <p id="ui-box-desc" style="margin:0; font-size:13px; opacity:0.9;">Download the official app to get started instantly.</p>
-            <!-- Automatically redirects to the latest release APK on GitHub -->
-            <a id="apk-download-link" href="https://github.com/AromaticTankStudios/ChatSpani_sharing/releases/latest/download/chatspani.apk" class="download-btn">📥 Download App (APK)</a>
+            
+            <!-- Download Button triggering active feedback -->
+            <a id="apk-download-link" href="https://github.com/AromaticTankStudios/ChatSpani_sharing/releases/latest/download/chatspani.apk" onclick="triggerDownloadFeedback()" class="download-btn">📥 Download App (APK)</a>
+            
+            <div id="status-banner">✅ Download started! Check your notification bar or browser downloads.</div>
         </div>
 
         <div class="steps-container">
@@ -236,11 +260,11 @@
             </div>
             <div class="step-item">
                 <div class="step-num">2</div>
-                <div id="ui-step-2">Once downloaded, tap the file notification to open it. If asked, tap <b>Settings</b> and allow <i>"Install from this source"</i>.</div>
+                <div id="ui-step-2">Once downloaded, <b>tap the download notification</b> at the top of your screen to open it.</div>
             </div>
             <div class="step-item">
                 <div class="step-num">3</div>
-                <div id="ui-step-3">Tap <b>Install</b>, open the app, and let Buhle help you build your professional CV!</div>
+                <div id="ui-step-3">Tap <b>Install</b> when prompted, open the app, and let Buhle help you build your CV!</div>
             </div>
         </div>
 
@@ -257,10 +281,11 @@
             boxTitle: "Ready to build your CV?",
             boxDesc: "Download the official app to get started instantly.",
             downloadBtn: "📥 Download App (APK)",
+            downloadingText: "✅ Download started! Check your notification bar or browser downloads.",
             stepsTitle: "📱 How to Install:",
             step1: "Tap the download button above to download the ChatSpani APK file.",
-            step2: "Once downloaded, tap the file notification to open it. If asked, tap <b>Settings</b> and allow <i>'Install from this source'</i>.",
-            step3: "Tap <b>Install</b>, open the app, and let Buhle help you build your professional CV!",
+            step2: "Once downloaded, <b>tap the download notification</b> at the top of your screen to open it.",
+            step3: "Tap <b>Install</b> when prompted, open the app, and let Buhle help you build your CV!",
             changeLang: "🌐 Change Language"
         },
         zu: {
@@ -269,10 +294,11 @@
             boxTitle: "Ulungiselele ukwakha i-CV yakho?",
             boxDesc: "Landa uhlelo lokusebenza olusemthethweni ukuze uqale ngokushesha.",
             downloadBtn: "📥 Landa Uhlelo (APK)",
+            downloadingText: "✅ Ukulanda kuqalile! Bheka phezulu esibukweni sakho sezaziso.",
             stepsTitle: "📱 Ungayifaka kanjani:",
             step1: "Cindezela inkinobho yokulanda ngenhla ukuze ulande ifayela le-ChatSpani APK.",
-            step2: "Uma selandiwe, cindezela isaziso sefayela ukuze ulivule. Uma kubuzwa, cindezela <b>Izilungiselelo (Settings)</b> bese uvumela <i>'Vumela kulomthombo'</i>.",
-            step3: "Cindezela <b>Faka (Install)</b>, vula uhlelo, futhi uvumele uBuhle akusize wakhe i-CV yakho yobungcweti!",
+            step2: "Uma selandiwe, <b>cindezela isaziso sokulanda</b> phezulu esibukweni sakho ukuze usivule.",
+            step3: "Cindezela <b>Faka (Install)</b> uma uceliwe, vula uhlelo, futhi uvumele uBuhle akusize wakhe i-CV yakho!",
             changeLang: "🌐 Shintsha Ulimi"
         },
         xh: {
@@ -281,10 +307,11 @@
             boxTitle: "Ukulungele ukwakha i-CV yakho?",
             boxDesc: "Khuphela i-app esemthethweni ukuze uqale ngoko nangoko.",
             downloadBtn: "📥 Khuphela i-App (APK)",
+            downloadingText: "✅ Ukukhuphela kuqalile! Khangela kwisaziso sakho phezulu.",
             stepsTitle: "📱 Uyifaka njani:",
             step1: "Cofa iqhosha lokukhuphela elingenhla ukuze ukhuphele ifayile yeChatSpani APK.",
-            step2: "Nje ukuba ikhutshelwe, cofa isaziso sefayile ukuze uyivule. Ukuba kuyacelwa, cofa <b>Izilungiselelo</b> kwaye uvumele <i>'Ukufaka kule ngcambu'</i>.",
-            step3: "Cofa <b>Faka (Install)</b>, vula i-app, kwaye uvumele uBuhle akuncede wakhe i-CV yakho yobungcali!",
+            step2: "Nje ukuba ikhutshelwe, <b>cofa isaziso sokukhuphela</b> phezulu kwesikrini sakho ukuze uyivule.",
+            step3: "Cofa <b>Faka (Install)</b> xa ucelwa njalo, vula i-app, kwaye uvumele uBuhle akuncede wakhe i-CV yakho!",
             changeLang: "🌐 Tshintsha Ulwimi"
         },
         st: {
@@ -293,10 +320,11 @@
             boxTitle: "U ikemiselitse ho etsa CV ea hau?",
             boxDesc: "Khoasolla sesebelisoa sa semmuso ho qala hang-hang.",
             downloadBtn: "📥 Khoasolla App (APK)",
+            downloadingText: "✅ Khoasollo e qalile! Sheba bareng ea hau ea tsebiso.",
             stepsTitle: "📱 Mokhoa oa ho kenya:",
             step1: "Tobetsa konopo ea khoasollo e ka holimo ho khoasolla faele ea ChatSpani APK.",
-            step2: "Hang ha e khoasitsoe, tobetsa tsebiso ea faele ho e bula. Haeba ho hlokahala, tobetsa <b>Litlhophiso</b> ebe u lumella <i>'Kenya ho tsoa mohloling ona'</i>.",
-            step3: "Tobetsa <b>Kenya (Install)</b>, bula sesebelisoa, 'me u lumelle Buhle ho u thusa ho etsa CV ea hau ea botsebi!",
+            step2: "Hang ha e khoasitsoe, <b>tobetsa tsebiso ea khoasollo</b> holimo skrineng sa hau ho e bula.",
+            step3: "Tobetsa <b>Kenya (Install)</b> ha u botsoa, bula sesebelisoa, 'me u lumelle Buhle ho u thusa ho etsa CV ea hau!",
             changeLang: "🌐 Fetola Puo"
         },
         tn: {
@@ -305,10 +333,11 @@
             boxTitle: "A o siametse go aga CV ya gago?",
             boxDesc: "Khoasolla app ya semmuso gore o simolole ka bonako.",
             downloadBtn: "📥 Khoasolla App (APK)",
+            downloadingText: "✅ Go khoasolla go simolotse! Lebelela bar ya gago ya kitsiso.",
             stepsTitle: "📱 Kafa o ka e tsenyang ka gona:",
             step1: "Tobetsa konopo ya go khoasolla kwa godimo go khoasolla faele ya ChatSpani APK.",
-            step2: "Fa e sena go khoasollwa, tobetsa kitsiso ya faele go e bula. Fa go batlega, tobetsa <b>Dipeakanyo</b> mme o letlele <i>'Tsenya go tswa mo motsweding o'</i>.",
-            step3: "Tobetsa <b>Tsenya (Install)</b>, bula app, mme o letlele Buhle go go thusa go aga CV ya gago ya manobonobo!",
+            step2: "Fa e sena go khoasollwa, <b>tobetsa kitsiso ya go khoasolla</b> kwa godimo ga sekirini sa gago go e bula.",
+            step3: "Tobetsa <b>Tsenya (Install)</b> fa o kopiwa, bula app, mme o letlele Buhle go go thusa go aga CV ya gago!",
             changeLang: "🌐 Fetola Puo"
         },
         af: {
@@ -317,15 +346,19 @@
             boxTitle: "Klaar om jou CV te bou?",
             boxDesc: "Laai die amptelike toepassing af om dadelik te begin.",
             downloadBtn: "📥 Laai App af (APK)",
+            downloadingText: "✅ Aflaai het begin! Kyk na jou kennisgewingbalk bo.",
             stepsTitle: "📱 Hoe om te installeer:",
             step1: "Tik op die aflaaiknop hierbo om die ChatSpani APK-lêer af te laai.",
-            step2: "Sodra dit afgelaai is, tik op die kennisgewing om dit oop te maak. Indien gevra, tik <b>Instellings</b> en laat toe <i>'Installeer vanaf hierdie bron'</i>.",
-            step3: "Tik <b>Installeer</b>, maak die toepassing oop, en laat Buhle jou help om jou professionele CV te bou!",
+            step2: "Sodra dit afgelaai is, <b>tik op die aflaaikennisgewing</b> bo-aan jou skerm om dit oop te maak.",
+            step3: "Tik <b>Installeer</b> wanneer gevra, maak die toepassing oop, en laat Buhle jou help om jou CV te bou!",
             changeLang: "🌐 Verander Taal"
         }
     };
 
+    let currentLang = 'en';
+
     function setLanguage(lang) {
+        currentLang = lang;
         const t = translations[lang] || translations.en;
         
         document.getElementById('ui-title').innerText = t.title;
@@ -333,6 +366,7 @@
         document.getElementById('ui-box-title').innerText = t.boxTitle;
         document.getElementById('ui-box-desc').innerText = t.boxDesc;
         document.querySelector('.download-btn').innerText = t.downloadBtn;
+        document.getElementById('status-banner').innerText = t.downloadingText;
         document.getElementById('ui-steps-title').innerText = t.stepsTitle;
         document.getElementById('ui-step-1').innerText = t.step1;
         document.getElementById('ui-step-2').innerHTML = t.step2;
@@ -343,6 +377,17 @@
         document.getElementById('main-screen').style.display = 'flex';
         
         localStorage.setItem('chatspani_lang', lang);
+    }
+
+    function triggerDownloadFeedback() {
+        const banner = document.getElementById('status-banner');
+        banner.style.display = 'block';
+        
+        // Show an active browser alert prompt after 2 seconds reminding them to tap the file
+        setTimeout(() => {
+            const t = translations[currentLang] || translations.en;
+            alert(t.step2.replace(/<[^>]*>?/gm, '')); // Strips HTML tags for clean alert prompt
+        }, 1500);
     }
 
     function goBackToLang() {
