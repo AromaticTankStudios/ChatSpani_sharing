@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatSpani - AI Career Partner & CV Builder</title>
+    <style>
+        :root {
+            --primary: #E91E63;
+            --primary-dark: #C2185B;
+            --surface: #ffffff;
+            --background: #f8f9fa;
+            --text: #212529;
+            --text-muted: #6c757d;
+            --success: #2E7D32;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            background: var(--surface);
+            min-height: 100vh;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            padding: 24px;
+        }
+
+        .header {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 24px;
+        }
+
+        .logo-placeholder {
+            width: 80px;
+            height: 80px;
+            background: var(--primary);
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px auto;
+            box-shadow: 0 8px 16px rgba(233, 30, 99, 0.3);
+        }
+
+        h1 {
+            font-size: 24px;
+            margin: 0 0 8px 0;
+            color: var(--text);
+        }
+
+        p.subtitle {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin: 0;
+        }
+
+        /* Language Selector Screen */
+        #lang-screen {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .lang-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .lang-btn {
+            background: #fff;
+            border: 2px solid #e9ecef;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .lang-btn:active, .lang-btn:hover {
+            border-color: var(--primary);
+            background: #fff5f8;
+            color: var(--primary);
+        }
+
+        /* Main Download & Guide Screen */
+        #main-screen {
+            display: none;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .download-box {
+            background: linear-gradient(135deg, #E91E63, #C2185B);
+            color: white;
+            padding: 24px;
+            border-radius: 16px;
+            text-align: center;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 20px rgba(233, 30, 99, 0.2);
+        }
+
+        .download-btn {
+            background: white;
+            color: var(--primary);
+            text-decoration: none;
+            display: block;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 16px;
+            margin-top: 16px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.1s ease;
+        }
+
+        .download-btn:active {
+            transform: scale(0.98);
+        }
+
+        .steps-container {
+            background: #f8f9fa;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .steps-title {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 12px;
+            color: var(--text);
+        }
+
+        .step-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 14px;
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--text);
+        }
+
+        .step-num {
+            background: var(--primary);
+            color: white;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            flex-shrink: 0;
+            margin-right: 12px;
+            margin-top: 2px;
+        }
+
+        .change-lang-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            text-decoration: underline;
+            font-size: 13px;
+            cursor: pointer;
+            text-align: center;
+            margin-top: auto;
+            padding: 12px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- LANGUAGE SELECTOR SCREEN -->
+    <div id="lang-screen">
+        <div class="header">
+            <div class="logo-placeholder">CS</div>
+            <h1>ChatSpani</h1>
+            <p class="subtitle">Please choose your preferred language / Khetha ulimi lwakho</p>
+        </div>
+        <div class="lang-grid">
+            <button class="lang-btn" onclick="setLanguage('en')">English</button>
+            <button class="lang-btn" onclick="setLanguage('zu')">isiZulu</button>
+            <button class="lang-btn" onclick="setLanguage('xh')">isiXhosa</button>
+            <button class="lang-btn" onclick="setLanguage('st')">Sesotho</button>
+            <button class="lang-btn" onclick="setLanguage('tn')">Setswana</button>
+            <button class="lang-btn" onclick="setLanguage('af')">Afrikaans</button>
+        </div>
+    </div>
+
+    <!-- MAIN DOWNLOAD & GUIDE SCREEN -->
+    <div id="main-screen">
+        <div class="header" style="margin-top: 10px; margin-bottom: 16px;">
+            <h1 id="ui-title">ChatSpani</h1>
+            <p class="subtitle" id="ui-subtitle">Your AI Career Partner & CV Builder</p>
+        </div>
+
+        <div class="download-box">
+            <h3 id="ui-box-title" style="margin:0 0 6px 0; font-size:18px;">Ready to build your CV?</h3>
+            <p id="ui-box-desc" style="margin:0; font-size:13px; opacity:0.9;">Download the official app to get started instantly.</p>
+            <!-- Automatically redirects to the latest release APK on GitHub -->
+            <a id="apk-download-link" href="https://github.com/AromaticTankStudios/ChatSpani_sharing/releases/latest/download/chatspani.apk" class="download-btn">📥 Download App (APK)</a>
+        </div>
+
+        <div class="steps-container">
+            <div class="steps-title" id="ui-steps-title">📱 How to Install:</div>
+            <div class="step-item">
+                <div class="step-num">1</div>
+                <div id="ui-step-1">Tap the download button above to download the ChatSpani APK file.</div>
+            </div>
+            <div class="step-item">
+                <div class="step-num">2</div>
+                <div id="ui-step-2">Once downloaded, tap the file notification to open it. If asked, tap <b>Settings</b> and allow <i>"Install from this source"</i>.</div>
+            </div>
+            <div class="step-item">
+                <div class="step-num">3</div>
+                <div id="ui-step-3">Tap <b>Install</b>, open the app, and let Buhle help you build your professional CV!</div>
+            </div>
+        </div>
+
+        <button class="change-lang-btn" onclick="goBackToLang()" id="ui-change-lang">🌐 Change Language / Shintsha Ulimi</button>
+    </div>
+
+</div>
+
+<script>
+    const translations = {
+        en: {
+            title: "ChatSpani",
+            subtitle: "Your AI Career Partner & CV Builder",
+            boxTitle: "Ready to build your CV?",
+            boxDesc: "Download the official app to get started instantly.",
+            downloadBtn: "📥 Download App (APK)",
+            stepsTitle: "📱 How to Install:",
+            step1: "Tap the download button above to download the ChatSpani APK file.",
+            step2: "Once downloaded, tap the file notification to open it. If asked, tap <b>Settings</b> and allow <i>'Install from this source'</i>.",
+            step3: "Tap <b>Install</b>, open the app, and let Buhle help you build your professional CV!",
+            changeLang: "🌐 Change Language"
+        },
+        zu: {
+            title: "ChatSpani",
+            subtitle: "Umlingani wakho womsebenzi & Wokwakha i-CV",
+            boxTitle: "Ulungiselele ukwakha i-CV yakho?",
+            boxDesc: "Landa uhlelo lokusebenza olusemthethweni ukuze uqale ngokushesha.",
+            downloadBtn: "📥 Landa Uhlelo (APK)",
+            stepsTitle: "📱 Ungayifaka kanjani:",
+            step1: "Cindezela inkinobho yokulanda ngenhla ukuze ulande ifayela le-ChatSpani APK.",
+            step2: "Uma selandiwe, cindezela isaziso sefayela ukuze ulivule. Uma kubuzwa, cindezela <b>Izilungiselelo (Settings)</b> bese uvumela <i>'Vumela kulomthombo'</i>.",
+            step3: "Cindezela <b>Faka (Install)</b>, vula uhlelo, futhi uvumele uBuhle akusize wakhe i-CV yakho yobungcweti!",
+            changeLang: "🌐 Shintsha Ulimi"
+        },
+        xh: {
+            title: "ChatSpani",
+            subtitle: "Iqabane lakho lomsebenzi kunye ne-CV Builder",
+            boxTitle: "Ukulungele ukwakha i-CV yakho?",
+            boxDesc: "Khuphela i-app esemthethweni ukuze uqale ngoko nangoko.",
+            downloadBtn: "📥 Khuphela i-App (APK)",
+            stepsTitle: "📱 Uyifaka njani:",
+            step1: "Cofa iqhosha lokukhuphela elingenhla ukuze ukhuphele ifayile yeChatSpani APK.",
+            step2: "Nje ukuba ikhutshelwe, cofa isaziso sefayile ukuze uyivule. Ukuba kuyacelwa, cofa <b>Izilungiselelo</b> kwaye uvumele <i>'Ukufaka kule ngcambu'</i>.",
+            step3: "Cofa <b>Faka (Install)</b>, vula i-app, kwaye uvumele uBuhle akuncede wakhe i-CV yakho yobungcali!",
+            changeLang: "🌐 Tshintsha Ulwimi"
+        },
+        st: {
+            title: "ChatSpani",
+            subtitle: "Mohlanka oa hau oa Mosebetsi le Moetsi oa CV",
+            boxTitle: "U ikemiselitse ho etsa CV ea hau?",
+            boxDesc: "Khoasolla sesebelisoa sa semmuso ho qala hang-hang.",
+            downloadBtn: "📥 Khoasolla App (APK)",
+            stepsTitle: "📱 Mokhoa oa ho kenya:",
+            step1: "Tobetsa konopo ea khoasollo e ka holimo ho khoasolla faele ea ChatSpani APK.",
+            step2: "Hang ha e khoasitsoe, tobetsa tsebiso ea faele ho e bula. Haeba ho hlokahala, tobetsa <b>Litlhophiso</b> ebe u lumella <i>'Kenya ho tsoa mohloling ona'</i>.",
+            step3: "Tobetsa <b>Kenya (Install)</b>, bula sesebelisoa, 'me u lumelle Buhle ho u thusa ho etsa CV ea hau ea botsebi!",
+            changeLang: "🌐 Fetola Puo"
+        },
+        tn: {
+            title: "ChatSpani",
+            subtitle: "Motheledi wa Tiro le Moagi wa CV",
+            boxTitle: "A o siametse go aga CV ya gago?",
+            boxDesc: "Khoasolla app ya semmuso gore o simolole ka bonako.",
+            downloadBtn: "📥 Khoasolla App (APK)",
+            stepsTitle: "📱 Kafa o ka e tsenyang ka gona:",
+            step1: "Tobetsa konopo ya go khoasolla kwa godimo go khoasolla faele ya ChatSpani APK.",
+            step2: "Fa e sena go khoasollwa, tobetsa kitsiso ya faele go e bula. Fa go batlega, tobetsa <b>Dipeakanyo</b> mme o letlele <i>'Tsenya go tswa mo motsweding o'</i>.",
+            step3: "Tobetsa <b>Tsenya (Install)</b>, bula app, mme o letlele Buhle go go thusa go aga CV ya gago ya manobonobo!",
+            changeLang: "🌐 Fetola Puo"
+        },
+        af: {
+            title: "ChatSpani",
+            subtitle: "Jou Loopbaanvennoot & CV Bouer",
+            boxTitle: "Klaar om jou CV te bou?",
+            boxDesc: "Laai die amptelike toepassing af om dadelik te begin.",
+            downloadBtn: "📥 Laai App af (APK)",
+            stepsTitle: "📱 Hoe om te installeer:",
+            step1: "Tik op die aflaaiknop hierbo om die ChatSpani APK-lêer af te laai.",
+            step2: "Sodra dit afgelaai is, tik op die kennisgewing om dit oop te maak. Indien gevra, tik <b>Instellings</b> en laat toe <i>'Installeer vanaf hierdie bron'</i>.",
+            step3: "Tik <b>Installeer</b>, maak die toepassing oop, en laat Buhle jou help om jou professionele CV te bou!",
+            changeLang: "🌐 Verander Taal"
+        }
+    };
+
+    function setLanguage(lang) {
+        const t = translations[lang] || translations.en;
+        
+        document.getElementById('ui-title').innerText = t.title;
+        document.getElementById('ui-subtitle').innerText = t.subtitle;
+        document.getElementById('ui-box-title').innerText = t.boxTitle;
+        document.getElementById('ui-box-desc').innerText = t.boxDesc;
+        document.querySelector('.download-btn').innerText = t.downloadBtn;
+        document.getElementById('ui-steps-title').innerText = t.stepsTitle;
+        document.getElementById('ui-step-1').innerText = t.step1;
+        document.getElementById('ui-step-2').innerHTML = t.step2;
+        document.getElementById('ui-step-3').innerHTML = t.step3;
+        document.getElementById('ui-change-lang').innerText = t.changeLang;
+
+        document.getElementById('lang-screen').style.display = 'none';
+        document.getElementById('main-screen').style.display = 'flex';
+        
+        localStorage.setItem('chatspani_lang', lang);
+    }
+
+    function goBackToLang() {
+        document.getElementById('main-screen').style.display = 'none';
+        document.getElementById('lang-screen').style.display = 'flex';
+    }
+
+    window.onload = function() {
+        const savedLang = localStorage.getItem('chatspani_lang');
+        if (savedLang && translations[savedLang]) {
+            setLanguage(savedLang);
+        }
+    }
+</script>
+
+</body>
+</html>
