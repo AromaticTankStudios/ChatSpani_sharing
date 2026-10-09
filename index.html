@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ChatSpani - AI Career Partner & CV Builder</title>
+    <!-- Include html2canvas library to generate downloadable ticket images -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root {
             --primary: #E91E63;
@@ -16,10 +18,10 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            /* Seamless tile pattern background */
+            /* Tighter repeating pattern tile */
             background-image: url('chatspani_pattern.jpg');
             background-repeat: repeat;
-            background-size: auto;
+            background-size: 150px; 
             color: var(--text);
             margin: 0;
             padding: 0;
@@ -32,7 +34,7 @@
         .container {
             width: 100%;
             max-width: 480px;
-            background: rgba(255, 255, 255, 0.95); /* Slight transparency to let pattern peek through subtly if needed */
+            background: rgba(255, 255, 255, 0.98);
             min-height: 100vh;
             box-shadow: 0 4px 25px rgba(0,0,0,0.1);
             display: flex;
@@ -43,24 +45,18 @@
 
         .header {
             text-align: center;
-            margin-top: 16px;
-            margin-bottom: 24px;
+            margin-top: 10px;
+            margin-bottom: 20px;
         }
 
         .logo-img {
-            width: 90px;
-            height: 90px;
+            width: 130px;
+            height: 130px;
             object-fit: contain;
-            margin: 0 auto 12px auto;
+            margin: 0 auto 8px auto;
             display: block;
             border-radius: 20px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
-        }
-
-        h1 {
-            font-size: 24px;
-            margin: 0 0 6px 0;
-            color: var(--text);
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
         }
 
         p.subtitle {
@@ -116,7 +112,7 @@
             padding: 24px;
             border-radius: 16px;
             text-align: center;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             box-shadow: 0 8px 20px rgba(233, 30, 99, 0.2);
         }
 
@@ -145,7 +141,6 @@
             transform: scale(0.98);
         }
 
-        /* Active status banner */
         #status-banner {
             display: none;
             background: #E8F5E9;
@@ -159,17 +154,64 @@
             border: 1px solid #C8E6C9;
         }
 
+        /* Promo Code Section */
+        .promo-section {
+            background: #fff3e0;
+            border: 2px dashed #ffb74d;
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .claim-btn {
+            background: #f57c00;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .ticket-card {
+            background: #ffffff;
+            border: 2px solid var(--primary);
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 15px;
+            text-align: left;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .promo-code-display {
+            background: #f8f9fa;
+            border: 1px solid #ced4da;
+            padding: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-align: center;
+            border-radius: 8px;
+            margin: 10px 0;
+            color: var(--primary);
+        }
+
+        /* Steps Container */
         .steps-container {
             background: #f8f9fa;
             border-radius: 16px;
             padding: 20px;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             border: 1px solid #edf2f7;
         }
 
         .steps-title {
             font-weight: bold;
-            font-size: 16px;
+            font-size: 15px;
             margin-bottom: 12px;
             color: var(--text);
         }
@@ -177,26 +219,55 @@
         .step-item {
             display: flex;
             align-items: flex-start;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
             font-size: 14px;
-            line-height: 1.5;
+            line-height: 1.4;
             color: var(--text);
         }
 
         .step-num {
             background: var(--primary);
             color: white;
-            width: 22px;
-            height: 22px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: bold;
             flex-shrink: 0;
-            margin-right: 12px;
+            margin-right: 10px;
             margin-top: 2px;
+        }
+
+        /* Release Notes Accordion */
+        .accordion {
+            background: #f1f3f5;
+            border: none;
+            width: 100%;
+            padding: 14px;
+            text-align: left;
+            font-weight: bold;
+            font-size: 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .panel {
+            padding: 0 14px;
+            background: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            border-radius: 0 0 12px 12px;
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
         }
 
         .change-lang-btn {
@@ -220,8 +291,7 @@
     <div id="lang-screen">
         <div class="header">
             <img src="chatspani_logo-04.png" alt="ChatSpani Logo" class="logo-img">
-            <h1>ChatSpani</h1>
-            <p class="subtitle">Please choose your preferred language / Khetha ulimi lwakho</p>
+            <p class="subtitle" style="margin-top: 15px;">Please choose your preferred language / Khetha ulimi lwakho</p>
         </div>
         <div class="lang-grid">
             <button class="lang-btn" onclick="setLanguage('en')">English</button>
@@ -236,8 +306,7 @@
     <!-- MAIN DOWNLOAD & GUIDE SCREEN -->
     <div id="main-screen">
         <div class="header" style="margin-top: 10px; margin-bottom: 16px;">
-            <img src="chatspani_logo-04.png" alt="ChatSpani Logo" class="logo-img" style="width: 70px; height: 70px;">
-            <h1 id="ui-title">ChatSpani</h1>
+            <img src="chatspani_logo-04.png" alt="ChatSpani Logo" class="logo-img">
             <p class="subtitle" id="ui-subtitle">Your AI Career Partner & CV Builder</p>
         </div>
 
@@ -245,132 +314,262 @@
             <h3 id="ui-box-title" style="margin:0 0 6px 0; font-size:18px;">Ready to build your CV?</h3>
             <p id="ui-box-desc" style="margin:0; font-size:13px; opacity:0.9;">Download the official app to get started instantly.</p>
             
-            <!-- Dynamic latest GitHub release download link -->
             <a id="apk-download-link" href="https://github.com/AromaticTankStudios/ChatSpani_sharing/releases/latest/download/chatspani.apk" onclick="triggerDownloadFeedback()" class="download-btn">📥 Download App (APK)</a>
+            <div id="status-banner">✅ Download started! Check your downloads folder.</div>
+        </div>
+
+        <!-- TEMPORARY PROMO CODE SECTION -->
+        <div id="promo-container" class="promo-section">
+            <h4 id="ui-promo-heading" style="margin:0 0 5px 0; color:#e65100;">🎁 Free Community CV Slots Available!</h4>
+            <p id="ui-promo-desc" style="margin:0 0 10px 0; font-size:12px; color:#555;">Get your free CV code right now before slots run out.</p>
+            <button id="ui-claim-btn" class="claim-btn" onclick="claimPromoCode()">Get Free CV Code & Ticket</button>
             
-            <div id="status-banner">✅ Download started! Check your notification bar or browser downloads.</div>
+            <div id="ticket-area" style="display:none;">
+                <div id="capture-ticket" class="ticket-card">
+                    <div style="text-align:center; font-weight:bold; color:var(--primary); font-size:16px;">ChatSpani Free CV Ticket</div>
+                    <div style="font-size:12px; color:#666; text-align:center; margin-top:2px;" id="ticket-subtitle">Keep this code safe!</div>
+                    <div id="display-code" class="promo-code-display">SPANI-XXXX</div>
+                    <div style="font-size:12px; line-height:1.4; color:#333;" id="ticket-instructions">
+                        1. Open ChatSpani app.<br>
+                        2. Tap 'Have a Promo Code?'.<br>
+                        3. Enter code to unlock free CV!
+                    </div>
+                    <div style="margin-top:12px; font-size:11px; border-top:1px dashed #ddd; padding-top:8px; text-align:center; color:#555;">
+                        📞 Support WhatsApp: <b>074 271 6256</b>
+                    </div>
+                </div>
+                <button id="ui-download-ticket-btn" class="claim-btn" style="background:#2E7D32; margin-top:12px;" onclick="downloadTicketImage()">📥 Save Ticket Image to Phone</button>
+            </div>
         </div>
 
+        <!-- PLAIN-TALK STEP-BY-STEP INSTALLATION GUIDE -->
         <div class="steps-container">
-            <div class="steps-title" id="ui-steps-title">📱 How to Install:</div>
-            <div class="step-item">
-                <div class="step-num">1</div>
-                <div id="ui-step-1">Tap the download button above to download the ChatSpani APK file.</div>
-            </div>
-            <div class="step-item">
-                <div class="step-num">2</div>
-                <div id="ui-step-2">Once downloaded, <b>tap the download notification</b> at the top of your screen to open it.</div>
-            </div>
-            <div class="step-item">
-                <div class="step-num">3</div>
-                <div id="ui-step-3">Tap <b>Install</b> when prompted, open the app, and let Buhle help you build your CV!</div>
-            </div>
+            <div class="steps-title" id="ui-steps-title">📱 Easy Steps to Install:</div>
+            <div class="step-item"><div class="step-num">1</div><div id="ui-step-1">Tap the pink download button above.</div></div>
+            <div class="step-item"><div class="step-num">2</div><div id="ui-step-2">Wait for the file to finish downloading on your phone.</div></div>
+            <div class="step-item"><div class="step-num">3</div><div id="ui-step-3">Tap your phone's notification bar or go to your <b>Downloads</b> folder and tap the downloaded file.</div></div>
+            <div class="step-item"><div class="step-num">4</div><div id="ui-step-4">If your phone asks for permission, tap <b>Settings</b> and turn on <i>"Allow from this source"</i>.</div></div>
+            <div class="step-item"><div class="step-num">5</div><div id="ui-step-5">Tap <b>Install</b>, open ChatSpani, and chat with Buhle to build your CV!</div></div>
         </div>
 
-        <button class="change-lang-btn" onclick="goBackToLang()" id="ui-change-lang">🌐 Change Language / Shintsha Ulimi</button>
+        <!-- RELEASE NOTES ACCORDION -->
+        <button class="accordion" onclick="toggleAccordion()">
+            <span id="ui-release-notes-title">📦 What's New in v11.3.5</span> <span>▼</span>
+        </button>
+        <div class="panel" id="ui-release-panel">
+            <p id="ui-release-text">
+                • <b>Smart AI Code-Switching:</b> Buhle now understands SMS talk, slang, and mixed languages easily while formatting your CV professionally.<br>
+                • <b>Required Personal Details:</b> Added smooth collection for Date of Birth and Gender for job applications.<br>
+                • <b>School-Leaver Support:</b> Special help for youth fresh out of school with zero work experience.<br>
+                • <b>Faster & Safer:</b> App performance improvements and payment verification upgrades.
+            </p>
+        </div>
+
+        <button class="change-lang-btn" onclick="goBackToLang()" id="ui-change-lang" style="margin-top: 20px;">🌐 Change Language / Shintsha Ulimi</button>
     </div>
 
 </div>
 
 <script>
+    // 100 PROMO CODES POOL
+    let promoCodes = [
+        "SPANI-00KCZX8L","SPANI-07VG0G44","SPANI-0TXKDPAE","SPANI-1EBL5AB0","SPANI-1S7C8MZT","SPANI-20W0MNLB","SPANI-294YLT2R","SPANI-4G3BFKY6","SPANI-4LN3EORY","SPANI-5EHHQFHG",
+        "SPANI-5QZSCOLF","SPANI-5ZH7ZIMQ","SPANI-62YPCRHH","SPANI-69FXTOMZ","SPANI-6SP9MBCO","SPANI-7C65V98Q","SPANI-800QTHPE","SPANI-86JDJKOW","SPANI-8B1E0RT1","SPANI-8CVBRYCR",
+        "SPANI-8V7ATV1I","SPANI-94Q4J4V5","SPANI-9KA14OEL","SPANI-9P2M6BMQ","SPANI-A3B8RM2K","SPANI-AQ2JKD91","SPANI-B2S1BKNO","SPANI-BI9O8QMA","SPANI-BOFOCU5H","SPANI-BWFJ725H",
+        "SPANI-CKPHS1PE","SPANI-CM89EVJI","SPANI-CSOUWM01","SPANI-CXADQ3ZY","SPANI-D2DIB56X","SPANI-D2MS3RGB","SPANI-E68FHA83","SPANI-EASODG9K","SPANI-ERI9LHQP","SPANI-F8TGVOBC",
+        "SPANI-FBUXQE2Z","SPANI-GMD49G72","SPANI-GTXKC1T9","SPANI-HAVKFBGP","SPANI-I2ZTS9ZM","SPANI-I3VOD8Y6","SPANI-INHQ7RZ1","SPANI-J9I8ZVTO","SPANI-JDIYOWZF","SPANI-JNO3B4XQ",
+        "SPANI-K3WJOFIT","SPANI-KFT5NP4G","SPANI-KI6ZJ3LP","SPANI-KR4QULBY","SPANI-LH2F1I6M","SPANI-LNRKLOMN","SPANI-LSDPH16E","SPANI-LSZ0GT0P","SPANI-M4691G80","SPANI-M904K2BL",
+        "SPANI-M97U9WQ6","SPANI-MFZQH7S1","SPANI-MWWC1KIM","SPANI-N45L3TV6","SPANI-NSKARI6Y","SPANI-O48OWT1C","SPANI-OLJA10SU","SPANI-OT1DY11J","SPANI-PB5NMCHP","SPANI-PJG4QAO8",
+        "SPANI-PLE9MBD4","SPANI-Q49C17XO","SPANI-Q7E1OR4T","SPANI-QGQYIEN5","SPANI-R10SHXT2","SPANI-R415FP64","SPANI-SCD5VSPT","SPANI-TM05FXI5","SPANI-TT14QVTB","SPANI-TTGI65QK",
+        "SPANI-UQ51OP70","SPANI-UXMRGYO7","SPANI-V7KFFH6L","SPANI-VAR5KKIL","SPANI-VPCTS0WK","SPANI-WI48IXVK","SPANI-WUZB8KN8","SPANI-XAVJ3RFX","SPANI-XJ6U7PJA","SPANI-XMGPYK2B",
+        "SPANI-XYCFHQ3M","SPANI-Y1IA1C4P","SPANI-Y8BJZDLB","SPANI-YOJ31G59","SPANI-YZ5RUZNA","SPANI-Z891WA4O","SPANI-ZH3B9G1K","SPANI-ZHB9TFPU","SPANI-ZQVJSM4N","SPANI-ZRRBDIY1"
+    ];
+
+    // Load remaining codes from localStorage if available
+    let storedCodes = localStorage.getItem('chatspani_promo_pool');
+    if (storedCodes) {
+        try { promoCodes = JSON.parse(storedCodes); } catch(e){}
+    }
+
     const translations = {
         en: {
-            title: "ChatSpani",
             subtitle: "Your AI Career Partner & CV Builder",
             boxTitle: "Ready to build your CV?",
             boxDesc: "Download the official app to get started instantly.",
             downloadBtn: "📥 Download App (APK)",
-            downloadingText: "✅ Download started! Check your notification bar or browser downloads.",
-            stepsTitle: "📱 How to Install:",
-            step1: "Tap the download button above to download the ChatSpani APK file.",
-            step2: "Once downloaded, <b>tap the download notification</b> at the top of your screen to open it.",
-            step3: "Tap <b>Install</b> when prompted, open the app, and let Buhle help you build your CV!",
-            changeLang: "🌐 Change Language"
+            downloadingText: "✅ Download started! Check your downloads folder.",
+            promoHeading: "🎁 Free Community CV Slots Available!",
+            promoDesc: "Tap below to generate your free CV code before slots run out.",
+            claimBtn: "Get Free CV Code & Ticket",
+            ticketSub: "Keep this ticket safe!",
+            ticketInstructions: "1. Open ChatSpani app.<br>2. Tap 'Have a Promo Code?'.<br>3. Enter code to unlock free CV!",
+            downloadTicketBtn: "📥 Save Ticket Image to Phone",
+            stepsTitle: "📱 Easy Steps to Install:",
+            step1: "Tap the pink download button above.",
+            step2: "Wait for the file to finish downloading on your phone.",
+            step3: "Tap your phone's notification bar or go to your <b>Downloads</b> folder and tap the downloaded file.",
+            step4: "If your phone asks for permission, tap <b>Settings</b> and turn on <i>'Allow from this source'</i>.",
+            step5: "Tap <b>Install</b>, open ChatSpani, and chat with Buhle to build your CV!",
+            releaseTitle: "📦 What's New in v11.3.5",
+            releaseText: "• <b>Smart AI Code-Switching:</b> Buhle now understands SMS talk, slang, and mixed languages easily while formatting your CV professionally.<br>• <b>Required Personal Details:</b> Added smooth collection for Date of Birth and Gender for job applications.<br>• <b>School-Leaver Support:</b> Special help for youth fresh out of school with zero work experience.<br>• <b>Faster & Safer:</b> App performance improvements and payment verification upgrades.",
+            changeLang: "🌐 Change Language",
+            allClaimed: "All free community slots have been claimed!"
         },
         zu: {
-            title: "ChatSpani",
             subtitle: "Umlingani wakho womsebenzi & Wokwakha i-CV",
             boxTitle: "Ulungiselele ukwakha i-CV yakho?",
             boxDesc: "Landa uhlelo lokusebenza olusemthethweni ukuze uqale ngokushesha.",
             downloadBtn: "📥 Landa Uhlelo (APK)",
-            downloadingText: "✅ Ukulanda kuqalile! Bheka phezulu esibukweni sakho sezaziso.",
-            stepsTitle: "📱 Ungayifaka kanjani:",
-            step1: "Cindezela inkinobho yokulanda ngenhla ukuze ulande ifayela le-ChatSpani APK.",
-            step2: "Uma selandiwe, <b>cindezela isaziso sokulanda</b> phezulu esibukweni sakho ukuze usivule.",
-            step3: "Cindezela <b>Faka (Install)</b> uma uceliwe, vula uhlelo, futhi uvumele uBuhle akusize wakhe i-CV yakho!",
-            changeLang: "🌐 Shintsha Ulimi"
+            downloadingText: "✅ Ukulanda kuqalile! Bheka folda yakho yokulanda.",
+            promoHeading: "🎁 Amathuba Wamahhala e-CV Ayaqala!",
+            promoDesc: "Cindezela ngezansi ukuze uthole ikhodi yakho yamahhala ye-CV.",
+            claimBtn: "Thola Ikhodi Yamahhala & Ithikithi",
+            ticketSub: "Gcina leli thikithi liphephile!",
+            ticketInstructions: "1. Vula uhlelo lwe-ChatSpani.<br>2. Cindezela 'Have a Promo Code?'.<br>3. Faka ikhodi ukuze uthole i-CV yamahhala!",
+            downloadTicketBtn: "📥 Gcina Ithikithi Efonini Yakho",
+            stepsTitle: "📱 Izinyathelo Ezilula Zokuyifaka:",
+            step1: "Cindezela inkinobho ebomvu yokulanda ngenhla.",
+            step2: "Linda ukuba ifayela liqedele ukulanda efonini yakho.",
+            step3: "Cindezela isaziso phezulu efonini yakho noma uye kufolda yakho <b>Downloads</b> bese ucindezela ifayela elilandiwe.",
+            step4: "Uma ifoni yakho icela imvume, cindezela <b>Izilungiselelo (Settings)</b> bese uvumela <i>'Vumela kulomthombo'</i>.",
+            step5: "Cindezela <b>Faka (Install)</b>, vula i-ChatSpani, futhi uxoxe noBuhle ukwakha i-CV yakho!",
+            releaseTitle: "📦 Okusha ku-v11.3.5",
+            releaseText: "• <b>Ukuqonda Izilimi Ezixubile:</b> USibuhle manje uqonda kahle ulimi lwasemgwaqweni, lwe-SMS, kanye nezilimi ezixubile.<br>• <b>Imininingwane Yomuntu:</b> Ukucelwa okulula kosuku lokuzalwa nobulili.<br>• <b>Usizo Lwabasha:</b> Usizo olukhethekile lwentsha esanda kuphuma esikoleni.<br>• <b>Okusheshayo Futhi Kuphephile:</b> Ukuthuthukiswa kohlelo nokuphepha.",
+            changeLang: "🌐 Shintsha Ulimi",
+            allClaimed: "Wonke amathikithi amahhala athathiwe!"
         },
         xh: {
-            title: "ChatSpani",
             subtitle: "Iqabane lakho lomsebenzi kunye ne-CV Builder",
             boxTitle: "Ukulungele ukwakha i-CV yakho?",
             boxDesc: "Khuphela i-app esemthethweni ukuze uqale ngoko nangoko.",
             downloadBtn: "📥 Khuphela i-App (APK)",
-            downloadingText: "✅ Ukukhuphela kuqalile! Khangela kwisaziso sakho phezulu.",
-            stepsTitle: "📱 Uyifaka njani:",
-            step1: "Cofa iqhosha lokukhuphela elingenhla ukuze ukhuphele ifayile yeChatSpani APK.",
-            step2: "Nje ukuba ikhutshelwe, <b>cofa isaziso sokukhuphela</b> phezulu kwesikrini sakho ukuze uyivule.",
-            step3: "Cofa <b>Faka (Install)</b> xa ucelwa njalo, vula i-app, kwaye uvumele uBuhle akuncede wakhe i-CV yakho!",
-            changeLang: "🌐 Tshintsha Ulwimi"
+            downloadingText: "✅ Ukukhuphela kuqalile! Khangela kwifolda yakho.",
+            promoHeading: "🎁 Amathuba Amahala e-CV Akhoyo!",
+            promoDesc: "Cofa apha ngezantsi ukuze ufumane ikhodi yakho yasimahla.",
+            claimBtn: "Fumana Ikhodi Yasimahla netikiti",
+            ticketSub: "Sigcine esi tikiti sikhuselekile!",
+            ticketInstructions: "1. Vula i-app ye-ChatSpani.<br>2. Cofa 'Have a Promo Code?'.<br>3. Faka ikhodi ukuze uvule i-CV yasimahla!",
+            downloadTicketBtn: "📥 Gcina Itikiti eFonini",
+            stepsTitle: "📱 Amanyathelo Alula Wokuyifaka:",
+            step1: "Cofa iqhosha elibomvu lokukhuphela elingenhla.",
+            step2: "Linda ukuba ifayile igqibe ukukhuphela efonini yakho.",
+            step3: "Cofa isaziso sakho phezulu okanye uye kwifolda yakho <b>Downloads</b> uze ucofe ifayile ekhutshelweyo.",
+            step4: "Ukuba ifoni yakho iyabuza, cofa <b>Izilungiselelo</b> uze uvumele <i>'Vumela kule ngcambu'</i>.",
+            step5: "Cofa <b>Faka (Install)</b>, vula i-ChatSpani, uze uncokole noBuhle ukwakha i-CV yakho!",
+            releaseTitle: "📦 Okutsha ku-v11.3.5",
+            releaseText: "• <b>Ubuchule be-AI:</b> U-Buhle ngoku uqonda ulwimi lwe-SMS nentetho yesitrata.<br>• <b>Iinkcukacha zoMntu:</b> Kudityaniswe umhla wokuzalwa kunye nesini.<br>• <b>Inkxaso Yolutsha:</b> Uncedo olukhethekileyo kulutsha oluphuma esikoleni.<br>• <b>Khawuleza kwaye ikhuselekile:</b> Uphuculo lwe-app.",
+            changeLang: "🌐 Tshintsha Ulwimi",
+            allClaimed: "Zonke izithuba zamahhala zigqityiwe!"
         },
         st: {
-            title: "ChatSpani",
             subtitle: "Mohlanka oa hau oa Mosebetsi le Moetsi oa CV",
             boxTitle: "U ikemiselitse ho etsa CV ea hau?",
             boxDesc: "Khoasolla sesebelisoa sa semmuso ho qala hang-hang.",
             downloadBtn: "📥 Khoasolla App (APK)",
-            downloadingText: "✅ Khoasollo e qalile! Sheba bareng ea hau ea tsebiso.",
-            stepsTitle: "📱 Mokhoa oa ho kenya:",
-            step1: "Tobetsa konopo ea khoasollo e ka holimo ho khoasolla faele ea ChatSpani APK.",
-            step2: "Hang ha e khoasitsoe, <b>tobetsa tsebiso ea khoasollo</b> holimo skrineng sa hau ho e bula.",
-            step3: "Tobetsa <b>Kenya (Install)</b> ha u botsoa, bula sesebelisoa, 'me u lumelle Buhle ho u thusa ho etsa CV ea hau!",
-            changeLang: "🌐 Fetola Puo"
+            downloadingText: "✅ Khoasollo e qalile! Sheba foldeng ea hau.",
+            promoHeading: "🎁 Likheo tsa mahala tsa CV li teng!",
+            promoDesc: "Tobetsa ka tlase ho fumana khoutu ea hau ea mahala ea CV.",
+            claimBtn: "Fumana Khoutu ea Mahala le Tekete",
+            ticketSub: "Boloka tekete ena e sireletsehile!",
+            ticketInstructions: "1. Bula sesebelisoa sa ChatSpani.<br>2. Tobetsa 'Have a Promo Code?'.<br>3. Kenya khoutu ho bula CV ea mahala!",
+            downloadTicketBtn: "📥 Boloka Tekete fonong",
+            stepsTitle: "📱 Mehato e Bonolo ea ho Kenya:",
+            step1: "Tobetsa konopo e pinki ea khoasollo ka holimo.",
+            step2: "Emela hore faele e qete ho khoasolla fonong ea hau.",
+            step3: "Tobetsa tsebiso ea hau e kaholimo kapa u ee foldeng ea <b>Downloads</b> ebe u tobetsa faele e khoasitsoeng.",
+            step4: "Haeba fono ea hau e botsa, tobetsa <b>Litlhophiso</b> ebe u lumella <i>'Lumella mohloling ona'</i>.",
+            step5: "Tobetsa <b>Kenya (Install)</b>, bula ChatSpani, 'me u qoqe le Buhle ho etsa CV ea hau!",
+            releaseTitle: "📦 Tse Ncha ho v11.3.5",
+            releaseText: "• <b>Bohlale ba AI:</b> Buhle joale o utloisisa puo ea letsatsi le letsatsi hantle haholo.<br>• <b>Lintlha tsa Motho:</b> Keketso ea letsatsi la tsoalo le bong.<br>• <b>Tšehetso ea Bacha:</b> Thuso e khethehileng bakeng sa bacha.<br>• <b>Ntlafatso:</b> Ts'ebetso e potlakileng le e sireletsehileng.",
+            changeLang: "🌐 Fetola Puo",
+            allClaimed: "Likheo tsohle tsa mahala li nkile!"
         },
         tn: {
-            title: "ChatSpani",
             subtitle: "Motheledi wa Tiro le Moagi wa CV",
             boxTitle: "A o siametse go aga CV ya gago?",
             boxDesc: "Khoasolla app ya semmuso gore o simolole ka bonako.",
             downloadBtn: "📥 Khoasolla App (APK)",
-            downloadingText: "✅ Go khoasolla go simolotse! Lebelela bar ya gago ya kitsiso.",
-            stepsTitle: "📱 Kafa o ka e tsenyang ka gona:",
-            step1: "Tobetsa konopo ya go khoasolla kwa godimo go khoasolla faele ya ChatSpani APK.",
-            step2: "Fa e sena go khoasollwa, <b>tobetsa kitsiso ya go khoasolla</b> kwa godimo ga sekirini sa gago go e bula.",
-            step3: "Tobetsa <b>Tsenya (Install)</b> fa o kopiwa, bula app, mme o letlele Buhle go go thusa go aga CV ya gago!",
-            changeLang: "🌐 Fetola Puo"
+            downloadingText: "✅ Go khoasolla go simolotse! Lebelela foldara ya gago.",
+            promoHeading: "🎁 Ditshono tsa mahala tsa CV di teng!",
+            promoDesc: "Tobetsa kwa tlase go bona khoutu ya gago ya mahala ya CV.",
+            claimBtn: "Amogela Khoutu ya Mahala le Tekete",
+            ticketSub: "Boloka tekete e sireletsegile!",
+            ticketInstructions: "1. Bula app ya ChatSpani.<br>2. Tobetsa 'Have a Promo Code?'.<br>3. Tsenya khoutu go bula CV ya mahala!",
+            downloadTicketBtn: "📥 Boloka Tekete mo Seleng",
+            stepsTitle: "📱 Magato a Bonolo a go e Tsenya:",
+            step1: "Tobetsa konopo e khibidu ya go khoasolla kwa godimo.",
+            step2: "Emela gore faele e fete go khoasollwa mo seleng sa gago.",
+            step3: "Tobetsa kitsiso kwa godimo kgotsa o ye kwa foldareng ya gago ya <b>Downloads</b> mme o tobetse faele e e khoasolodilweng.",
+            step4: "Fa sele tsa gago di botsa, tobetsa <b>Dipeakanyo</b> mme o letlele <i>'Letlelela go tswa mo motsweding o'</i>.",
+            step5: "Tobetsa <b>Tsenya (Install)</b>, bula ChatSpani, mme o buisane le Buhle go aga CV ya gago!",
+            releaseTitle: "📦 Tse Dintšhwa mo v11.3.5",
+            releaseText: "• <b>Botlhale jwa AI:</b> Buhle jaanong o tlhaloganya puo ya sekgowa sa motseng le ya SMS.<br>• <b>Dintlha tsa Motho:</b> Go tsenngwa ga letsatsi la botsalo le bong.<br>• <b>Tshegetso ya Bašwa:</b> Thuso e e kgethegileng ya baswa.<br>• <b>Phetlabotlhale:</b> App e bereka ka bonako le ka pabalesego.",
+            changeLang: "🌐 Fetola Puo",
+            allClaimed: "Ditshono tsotlhe di fedile!"
         },
         af: {
-            title: "ChatSpani",
             subtitle: "Jou Loopbaanvennoot & CV Bouer",
             boxTitle: "Klaar om jou CV te bou?",
             boxDesc: "Laai die amptelike toepassing af om dadelik te begin.",
             downloadBtn: "📥 Laai App af (APK)",
-            downloadingText: "✅ Aflaai het begin! Kyk na jou kennisgewingbalk bo.",
-            stepsTitle: "📱 Hoe om te installeer:",
-            step1: "Tik op die aflaaiknop hierbo om die ChatSpani APK-lêer af te laai.",
-            step2: "Sodra dit afgelaai is, <b>tik op die aflaaikennisgewing</b> bo-aan jou skerm om dit oop te maak.",
-            step3: "Tik <b>Installeer</b> wanneer gevra, maak die toepassing oop, en laat Buhle jou help om jou CV te bou!",
-            changeLang: "🌐 Verander Taal"
+            downloadingText: "✅ Aflaai het begin! Kyk na jou aflaaigids.",
+            promoHeading: "🎁 Gratis Gemeenskap CV Gleuwe Beskikbaar!",
+            promoDesc: "Tik hieronder om jou gratis CV-kode te genereer voordat dit opraak.",
+            claimBtn: "Kry Gratis CV-kode & Kaartjie",
+            ticketSub: "Hou hierdie kaartjie veilig!",
+            ticketInstructions: "1. Maak ChatSpani app oop.<br>2. Tik 'Have a Promo Code?'.<br>3. Sleutel kode in vir gratis CV!",
+            downloadTicketBtn: "📥 Stoor Kaartjie As Beeld op Foon",
+            stepsTitle: "📱 Maklike Stappe om te Installeer:",
+            step1: "Tik op die rooi aflaaiknop hierbo.",
+            step2: "Wag vir die lêer om klaar af te laai op jou foon.",
+            step3: "Tik jou foon se kennisgewingbalk of gaan na jou <b>Downloads</b> gids en tik op die afgelaaide lêer.",
+            step4: "As jou foon toestemming vra, tik <b>Instellings</b> en laat toe <i>'Installeer vanaf hierdie bron'</i>.",
+            step5: "Tik <b>Installeer</b>, maak ChatSpani oop, en gesels met Buhle om jou CV te bou!",
+            releaseTitle: "📦 Wat's Nuut in v11.3.5",
+            releaseText: "• <b>Slim AI Taalwisseling:</b> Buhle verstaan nou SMS-taal en sleng perfek terwyl dit jou CV professioneel formateer.<br>• <b>Verpligte Persoonlike Besonderhede:</b> Geïntegreerde datum van geboorte en geslag inzameling.<br>• <b>Skoolverlater Ondersteuning:</b> Spesiale hulp vir jeugdiges sonder vorige werkervaring.<br>• <b>Vinniger & Veiliger:</b> Toepassing werkverrigting en betalingsverifikasie opgraderings.",
+            changeLang: "🌐 Verander Taal",
+            allClaimed: "Alle gratis gemeenskap gleuwe is opgeëis!"
         }
     };
 
     let currentLang = 'en';
+    let currentAssignedCode = "";
 
     function setLanguage(lang) {
         currentLang = lang;
         const t = translations[lang] || translations.en;
         
-        document.getElementById('ui-title').innerText = t.title;
         document.getElementById('ui-subtitle').innerText = t.subtitle;
         document.getElementById('ui-box-title').innerText = t.boxTitle;
         document.getElementById('ui-box-desc').innerText = t.boxDesc;
         document.querySelector('.download-btn').innerText = t.downloadBtn;
         document.getElementById('status-banner').innerText = t.downloadingText;
+        
+        // Promo text
+        document.getElementById('ui-promo-heading').innerText = t.promoHeading;
+        document.getElementById('ui-promo-desc').innerText = t.promoDesc;
+        document.getElementById('ui-claim-btn').innerText = t.claimBtn;
+        document.getElementById('ticket-subtitle').innerText = t.ticketSub;
+        document.getElementById('ticket-instructions').innerHTML = t.ticketInstructions;
+        document.getElementById('ui-download-ticket-btn').innerText = t.downloadTicketBtn;
+
+        // Steps
         document.getElementById('ui-steps-title').innerText = t.stepsTitle;
         document.getElementById('ui-step-1').innerText = t.step1;
-        document.getElementById('ui-step-2').innerHTML = t.step2;
-        document.getElementById('ui-step-3').innerHTML = t.step3;
+        document.getElementById('ui-step-2').innerText = t.step2;
+        document.getElementById('ui-step-3').innerText = t.step3;
+        document.getElementById('ui-step-4').innerHTML = t.step4;
+        document.getElementById('ui-step-5').innerHTML = t.step5;
+
+        // Release notes
+        document.getElementById('ui-release-notes-title').innerText = t.releaseTitle;
+        document.getElementById('ui-release-text').innerHTML = t.releaseText;
         document.getElementById('ui-change-lang').innerText = t.changeLang;
+
+        // Check if pool is empty
+        if (promoCodes.length === 0) {
+            document.getElementById('promo-container').style.display = 'none';
+        }
 
         document.getElementById('lang-screen').style.display = 'none';
         document.getElementById('main-screen').style.display = 'flex';
@@ -381,11 +580,51 @@
     function triggerDownloadFeedback() {
         const banner = document.getElementById('status-banner');
         banner.style.display = 'block';
+    }
+
+    function claimPromoCode() {
+        if (promoCodes.length === 0) {
+            alert(translations[currentLang].allClaimed);
+            document.getElementById('promo-container').style.display = 'none';
+            return;
+        }
+
+        // Pop one code from the pool
+        currentAssignedCode = promoCodes.shift();
         
-        setTimeout(() => {
-            const t = translations[currentLang] || translations.en;
-            alert(t.step2.replace(/<[^>]*>?/gm, ''));
-        }, 1500);
+        // Save remaining pool to localStorage so it persists across refreshes
+        localStorage.setItem('chatspani_promo_pool', JSON.stringify(promoCodes));
+
+        // Display code on ticket
+        document.getElementById('display-code').innerText = currentAssignedCode;
+        
+        // Hide claim button, show ticket card
+        document.getElementById('ui-claim-btn').style.display = 'none';
+        document.getElementById('ui-promo-desc').style.display = 'none';
+        document.getElementById('ticket-area').style.display = 'block';
+
+        if (promoCodes.length === 0) {
+            document.getElementById('ui-promo-heading').innerText = translations[currentLang].allClaimed;
+        }
+    }
+
+    function downloadTicketImage() {
+        const ticketElement = document.getElementById('capture-ticket');
+        html2canvas(ticketElement, { scale: 2 }).then(canvas => {
+            const link = document.createElement('a');
+            link.download = `ChatSpani_Ticket_${currentAssignedCode}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        });
+    }
+
+    function toggleAccordion() {
+        const panel = document.getElementById('ui-release-panel');
+        if (panel.style.maxHeight) {
+            panel.style.maxHeight = null;
+        } else {
+            panel.style.maxHeight = panel.scrollHeight + "px";
+        }
     }
 
     function goBackToLang() {
@@ -394,6 +633,9 @@
     }
 
     window.onload = function() {
+        if (promoCodes.length === 0) {
+            document.getElementById('promo-container').style.display = 'none';
+        }
         const savedLang = localStorage.getItem('chatspani_lang');
         if (savedLang && translations[savedLang]) {
             setLanguage(savedLang);
