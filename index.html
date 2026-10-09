@@ -9,7 +9,6 @@
             --primary: #E91E63;
             --primary-dark: #C2185B;
             --surface: #ffffff;
-            --background: #f8f9fa;
             --text: #212529;
             --text-muted: #6c757d;
             --success: #2E7D32;
@@ -17,7 +16,10 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--background);
+            /* Seamless tile pattern background */
+            background-image: url('chatspani_pattern.jpg');
+            background-repeat: repeat;
+            background-size: auto;
             color: var(--text);
             margin: 0;
             padding: 0;
@@ -30,9 +32,9 @@
         .container {
             width: 100%;
             max-width: 480px;
-            background: var(--surface);
+            background: rgba(255, 255, 255, 0.95); /* Slight transparency to let pattern peek through subtly if needed */
             min-height: 100vh;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 25px rgba(0,0,0,0.1);
             display: flex;
             flex-direction: column;
             box-sizing: border-box;
@@ -41,28 +43,23 @@
 
         .header {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 16px;
             margin-bottom: 24px;
         }
 
-        .logo-placeholder {
-            width: 80px;
-            height: 80px;
-            background: var(--primary);
-            color: white;
-            font-size: 28px;
-            font-weight: bold;
+        .logo-img {
+            width: 90px;
+            height: 90px;
+            object-fit: contain;
+            margin: 0 auto 12px auto;
+            display: block;
             border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 16px auto;
-            box-shadow: 0 8px 16px rgba(233, 30, 99, 0.3);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
         }
 
         h1 {
             font-size: 24px;
-            margin: 0 0 8px 0;
+            margin: 0 0 6px 0;
             color: var(--text);
         }
 
@@ -167,6 +164,7 @@
             border-radius: 16px;
             padding: 20px;
             margin-bottom: 24px;
+            border: 1px solid #edf2f7;
         }
 
         .steps-title {
@@ -221,7 +219,7 @@
     <!-- LANGUAGE SELECTOR SCREEN -->
     <div id="lang-screen">
         <div class="header">
-            <div class="logo-placeholder">CS</div>
+            <img src="chatspani_logo-04.png" alt="ChatSpani Logo" class="logo-img">
             <h1>ChatSpani</h1>
             <p class="subtitle">Please choose your preferred language / Khetha ulimi lwakho</p>
         </div>
@@ -238,6 +236,7 @@
     <!-- MAIN DOWNLOAD & GUIDE SCREEN -->
     <div id="main-screen">
         <div class="header" style="margin-top: 10px; margin-bottom: 16px;">
+            <img src="chatspani_logo-04.png" alt="ChatSpani Logo" class="logo-img" style="width: 70px; height: 70px;">
             <h1 id="ui-title">ChatSpani</h1>
             <p class="subtitle" id="ui-subtitle">Your AI Career Partner & CV Builder</p>
         </div>
@@ -246,7 +245,7 @@
             <h3 id="ui-box-title" style="margin:0 0 6px 0; font-size:18px;">Ready to build your CV?</h3>
             <p id="ui-box-desc" style="margin:0; font-size:13px; opacity:0.9;">Download the official app to get started instantly.</p>
             
-            <!-- Download Button triggering active feedback -->
+            <!-- Dynamic latest GitHub release download link -->
             <a id="apk-download-link" href="https://github.com/AromaticTankStudios/ChatSpani_sharing/releases/latest/download/chatspani.apk" onclick="triggerDownloadFeedback()" class="download-btn">📥 Download App (APK)</a>
             
             <div id="status-banner">✅ Download started! Check your notification bar or browser downloads.</div>
@@ -383,10 +382,9 @@
         const banner = document.getElementById('status-banner');
         banner.style.display = 'block';
         
-        // Show an active browser alert prompt after 2 seconds reminding them to tap the file
         setTimeout(() => {
             const t = translations[currentLang] || translations.en;
-            alert(t.step2.replace(/<[^>]*>?/gm, '')); // Strips HTML tags for clean alert prompt
+            alert(t.step2.replace(/<[^>]*>?/gm, ''));
         }, 1500);
     }
 
