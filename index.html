@@ -18,7 +18,6 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            /* Tighter repeating pattern tile */
             background-image: url('chatspani_pattern.jpg');
             background-repeat: repeat;
             background-size: 150px; 
@@ -50,13 +49,13 @@
         }
 
         .logo-img {
-            width: 130px;
-            height: 130px;
+            width: 180px;
+            height: 180px;
             object-fit: contain;
-            margin: 0 auto 8px auto;
+            margin: 0 auto 12px auto;
             display: block;
-            border-radius: 20px;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+            border-radius: 24px;
+            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.12));
         }
 
         p.subtitle {
@@ -306,7 +305,7 @@
     <!-- MAIN DOWNLOAD & GUIDE SCREEN -->
     <div id="main-screen">
         <div class="header" style="margin-top: 10px; margin-bottom: 16px;">
-            <img src="chatspani_logo-04.png" alt="ChatSpani Logo" class="logo-img">
+            <img src="chatspani_logo-04.png" alt="ChatSpani Logo" class="logo-img" style="width: 140px; height: 140px;">
             <p class="subtitle" id="ui-subtitle">Your AI Career Partner & CV Builder</p>
         </div>
 
@@ -322,7 +321,7 @@
         <div id="promo-container" class="promo-section">
             <h4 id="ui-promo-heading" style="margin:0 0 5px 0; color:#e65100;">🎁 Free Community CV Slots Available!</h4>
             <p id="ui-promo-desc" style="margin:0 0 10px 0; font-size:12px; color:#555;">Get your free CV code right now before slots run out.</p>
-            <button id="ui-claim-btn" class="claim-btn" onclick="claimPromoCode()">Get Free CV Here!</button>
+            <button id="ui-claim-btn" class="claim-btn" onclick="claimPromoCode()">Get Free CV Here</button>
             
             <div id="ticket-area" style="display:none;">
                 <div id="capture-ticket" class="ticket-card">
@@ -371,8 +370,9 @@
 </div>
 
 <script>
-    // 100 PROMO CODES POOL
+    // PROMO CODES POOL INCLUDING 3 BONUS CODES
     let promoCodes = [
+        "SPANI-FREECV01", "SPANI-FREECV02", "SPANI-FREECV03",
         "SPANI-00KCZX8L","SPANI-07VG0G44","SPANI-0TXKDPAE","SPANI-1EBL5AB0","SPANI-1S7C8MZT","SPANI-20W0MNLB","SPANI-294YLT2R","SPANI-4G3BFKY6","SPANI-4LN3EORY","SPANI-5EHHQFHG",
         "SPANI-5QZSCOLF","SPANI-5ZH7ZIMQ","SPANI-62YPCRHH","SPANI-69FXTOMZ","SPANI-6SP9MBCO","SPANI-7C65V98Q","SPANI-800QTHPE","SPANI-86JDJKOW","SPANI-8B1E0RT1","SPANI-8CVBRYCR",
         "SPANI-8V7ATV1I","SPANI-94Q4J4V5","SPANI-9KA14OEL","SPANI-9P2M6BMQ","SPANI-A3B8RM2K","SPANI-AQ2JKD91","SPANI-B2S1BKNO","SPANI-BI9O8QMA","SPANI-BOFOCU5H","SPANI-BWFJ725H",
@@ -382,10 +382,9 @@
         "SPANI-M97U9WQ6","SPANI-MFZQH7S1","SPANI-MWWC1KIM","SPANI-N45L3TV6","SPANI-NSKARI6Y","SPANI-O48OWT1C","SPANI-OLJA10SU","SPANI-OT1DY11J","SPANI-PB5NMCHP","SPANI-PJG4QAO8",
         "SPANI-PLE9MBD4","SPANI-Q49C17XO","SPANI-Q7E1OR4T","SPANI-QGQYIEN5","SPANI-R10SHXT2","SPANI-R415FP64","SPANI-SCD5VSPT","SPANI-TM05FXI5","SPANI-TT14QVTB","SPANI-TTGI65QK",
         "SPANI-UQ51OP70","SPANI-UXMRGYO7","SPANI-V7KFFH6L","SPANI-VAR5KKIL","SPANI-VPCTS0WK","SPANI-WI48IXVK","SPANI-WUZB8KN8","SPANI-XAVJ3RFX","SPANI-XJ6U7PJA","SPANI-XMGPYK2B",
-        "SPANI-XYCFHQ3M","SPANI-Y1IA1C4P","SPANI-Y8BJZDLB","SPANI-YOJ31G59","SPANI-YZ5RUZNA","SPANI-Z891WA4O","SPANI-ZH3B9G1K","SPANI-ZHB9TFPU","SPANI-ZQVJSM4N","SPANI-ZRRBDIY1","SPANI-FREECV01"
+        "SPANI-XYCFHQ3M","SPANI-Y1IA1C4P","SPANI-Y8BJZDLB","SPANI-YOJ31G59","SPANI-YZ5RUZNA","SPANI-Z891WA4O","SPANI-ZH3B9G1K","SPANI-ZHB9TFPU","SPANI-ZQVJSM4N","SPANI-ZRRBDIY1"
     ];
 
-    // Load remaining codes from localStorage if available
     let storedCodes = localStorage.getItem('chatspani_promo_pool');
     if (storedCodes) {
         try { promoCodes = JSON.parse(storedCodes); } catch(e){}
@@ -400,7 +399,7 @@
             downloadingText: "✅ Download started! Check your downloads folder.",
             promoHeading: "🎁 Free Community CV Slots Available!",
             promoDesc: "Tap below to generate your free CV code before slots run out.",
-            claimBtn: "Get Free CV Here",
+            claimBtn: "Get Free CV Here!",
             ticketSub: "Keep this ticket safe!",
             ticketInstructions: "1. Open ChatSpani app.<br>2. Tap 'Have a Promo Code?'.<br>3. Enter code to unlock free CV!",
             downloadTicketBtn: "📥 Save Ticket Image to Phone",
@@ -515,7 +514,7 @@
             downloadingText: "✅ Aflaai het begin! Kyk na jou aflaaigids.",
             promoHeading: "🎁 Gratis Gemeenskap CV Gleuwe Beskikbaar!",
             promoDesc: "Tik hieronder om jou gratis CV-kode te genereer voordat dit opraak.",
-            claimBtn: "Kry Gratis CV-kode",
+            claimBtn: "Kry Gratis CV-kode & Kaartjie",
             ticketSub: "Hou hierdie kaartjie veilig!",
             ticketInstructions: "1. Maak ChatSpani app oop.<br>2. Tik 'Have a Promo Code?'.<br>3. Sleutel kode in vir gratis CV!",
             downloadTicketBtn: "📥 Stoor Kaartjie As Beeld op Foon",
@@ -566,7 +565,6 @@
         document.getElementById('ui-release-text').innerHTML = t.releaseText;
         document.getElementById('ui-change-lang').innerText = t.changeLang;
 
-        // Check if pool is empty
         if (promoCodes.length === 0) {
             document.getElementById('promo-container').style.display = 'none';
         }
@@ -589,16 +587,10 @@
             return;
         }
 
-        // Pop one code from the pool
         currentAssignedCode = promoCodes.shift();
-        
-        // Save remaining pool to localStorage so it persists across refreshes
         localStorage.setItem('chatspani_promo_pool', JSON.stringify(promoCodes));
 
-        // Display code on ticket
         document.getElementById('display-code').innerText = currentAssignedCode;
-        
-        // Hide claim button, show ticket card
         document.getElementById('ui-claim-btn').style.display = 'none';
         document.getElementById('ui-promo-desc').style.display = 'none';
         document.getElementById('ticket-area').style.display = 'block';
